@@ -6,6 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import List, Optional
 
+
 # --- Pydantic Models: Defines the shape of our JSON output ---
 class ChartDataPoint(BaseModel):
     date: str
@@ -31,7 +32,6 @@ app.add_middleware(
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
-# --- The Core Logic: Signal Generation ---
 def generate_signals_and_data(ticker: str) -> pd.DataFrame:
     """
     This is the main "decision engine". It creates mock data and generates signals.
@@ -72,9 +72,14 @@ def generate_signals_and_data(ticker: str) -> pd.DataFrame:
     
     return df
 
+
+
 # --- The API Endpoint ---
-@app.get("/get_chart_data/{ticker}", response_model=ChartResponse)
-def get_chart_data_endpoint(ticker: str):
+
+
+
+@app.get("/forecast_chart_data/{ticker}", response_model=ChartResponse)
+def getForecastChartDataEndpoint(ticker: str):
     """
     API endpoint that generates and returns the chart data with signals.
     """
@@ -93,3 +98,29 @@ def get_chart_data_endpoint(ticker: str):
         })
         
     return {"chartData": chart_data_list}
+
+# Pydantic model for chart data without signals
+class PredictionDataPoint(BaseModel):
+    date: str
+    actual: float
+    predicted: float
+
+class PredictionResponse(BaseModel):
+    data: List[PredictionDataPoint]
+
+@app.get("/predict_chart_data/{ticker}", response_model=PredictionResponse)
+def getPredictionChartData(ticker: str):
+    """
+    Returns actual vs predicted prices in JSON format.
+    """
+    df = generate_signals_and_data(ticker)
+    
+    data_list = []
+    for _, row in df.iterrows():
+        data_list.append({
+            "date": row['date'].strftime('%Y-%m-%d'),
+            "actual": round(row['actual'], 2),
+            "predicted": round(row['predicted'], 2)
+        })
+    
+    return {"data": data_list}
