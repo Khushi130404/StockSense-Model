@@ -93,8 +93,3 @@ def get_chart_data_endpoint(ticker: str):
         })
         
     return {"chartData": chart_data_list}
-
-# To run this:
-# 1. pip install fastapi "uvicorn[standard]" pandas numpy
-# 2. uvicorn api:app --reload
-
