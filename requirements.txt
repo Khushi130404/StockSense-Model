@@ -1,0 +1,43 @@
+# Web Scraping
+selenium==4.23.1
+beautifulsoup4==4.12.3
+requests==2.32.3
+yfinance==0.2.43
+
+# Data Manipulation and Analysis
+pandas==2.2.3
+numpy==1.26.4
+sqlalchemy==2.0.30
+
+# Machine Learning
+scikit-learn==1.5.2
+tensorflow==2.16.1
+keras==3.3.3
+keras-tuner==1.4.7
+
+# Data Visualization
+matplotlib==3.9.2
+plotly==5.23.0
+seaborn==0.13.2
+
+# Database and ORM
+# sqlite3 comes built-in with Python, no need to install
+
+# Jupyter (optional, for development and data exploration)
+jupyter==1.0.0
+
+# API Development (if you plan to create an API)
+flask==3.0.3
+
+# Testing
+pytest==8.3.3
+
+# Code Formatting and Linting
+black==24.8.0
+flake8==7.1.1
+
+# Environment Management
+python-dotenv==1.0.1
+
+# Miscellaneous Utilities
+tqdm==4.66.5
